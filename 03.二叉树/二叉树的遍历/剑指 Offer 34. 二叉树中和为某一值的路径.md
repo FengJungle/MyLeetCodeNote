@@ -29,21 +29,17 @@ void backtracking(TreeNode* node, int curTarget, vector<int>&path)
     {
         return;
     }
-    if(curTarget == node->val && node->left == nullptr && node->right == nullptr)
+    curTarget-=node->val;
+    path.push_back(node->val);
+    if(curTarget == 0 && node->left == nullptr && node->right == nullptr)
     {
-        path.push_back(node->val);
         ret.push_back(path);
-        path.pop_back();
-        return;
     }
-    // left
-    path.push_back(node->val);
-    backtracking(node->left, curTarget-node->val, path);
-    path.pop_back();
-    
-    // right
-    path.push_back(node->val);
-    backtracking(node->right, curTarget-node->val, path);
+    else
+    {
+        backtracking(node->left, curTarget, path);    
+        backtracking(node->right, curTarget, path);
+    }
     path.pop_back();
 }
 
